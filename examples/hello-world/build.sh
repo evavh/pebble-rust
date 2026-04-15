@@ -2,22 +2,21 @@
 
 # Initial cleanup
 pebble clean
+cargo clean
+rm -r rustc_temp
 
 # Get the crate name
 crate_name=${PWD##*/}
 crate_name=${crate_name//'-'/'_'}
 
 # Build the project through Cargo
-cargo +nightly build --release
-
-if [[ ! -d target/thumbv7m-none-eabi/release/deps ]]; then
-    echo "Build failed. Exiting."
-    exit 101
-fi
+cargo --version
+cargo build --release || exit 1
 
 cd target/thumbv7m-none-eabi/release/deps
 
 # Move the crates to a different directory, so that the next commands don't remove them.
+echo $PWD
 mkdir ../crates
 mv *.rlib ../crates
 
@@ -36,18 +35,9 @@ cd -
 # Initialize the directories
 mkdir rustc_temp
 
+rustc -Vv
 # Build the project through rustc
-rustc +nightly -L target/thumbv7m-none-eabi/release/crates -L target/release/deps \
-        --color always --emit=llvm-ir --crate-type=staticlib  \
-        --target thumbv7m-none-eabi src/lib.rs -A dead-code -o rustc_temp/lib.ll
-
-# Assemble through LLC
-llc -mtriple=thumbv7m-none-eabi -relocation-model=pic -march=thumb \
-          -mattr=+thumb2 -mattr=+soft-float -mcpu=cortex-m3 --asm-verbose=false \
-          -o rustc_temp/lib.s rustc_temp/lib.ll
-
-# Convert to .o through as
-arm-none-eabi-as -c rustc_temp/lib.s -o rustc_temp/lib.o
+rustc -L target/thumbv7m-none-eabi/release/crates -L target/release/deps --emit=obj --crate-type=staticlib --target thumbv7m-none-eabi src/lib.rs -o rustc_temp/lib.o || exit 1
 
 # Replace the object file we removed earlier with this one
 mv rustc_temp/*.o target/thumbv7m-none-eabi/release/deps
@@ -57,7 +47,7 @@ pebble build
 
 # Cleanup
 #cargo clean
-rm -r rustc_temp
+#rm -r rustc_temp
 
 
 

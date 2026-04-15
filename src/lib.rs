@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#![feature(core_intrinsics, intrinsics, untagged_unions, alloc, alloc_error_handler)]
+#![feature(core_intrinsics, intrinsics, alloc, alloc_error_handler)]
 #![no_std]
 #![no_builtins]
 

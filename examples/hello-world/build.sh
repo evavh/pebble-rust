@@ -21,4 +21,4 @@ find . -type f ! -name '*.rcgu.o' -delete
 cd -
 
 # Build through waf
-pebble build
+#pebble build

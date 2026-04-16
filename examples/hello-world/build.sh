@@ -1,9 +1,5 @@
 #@IgnoreInspection BashAddShebang
 
-# Initial cleanup
-pebble clean
-cargo clean
-
 target="thumbv7m-none-eabi"
 
 export RUSTFLAGS="-C relocation-model=pie -C codegen-units=1 -C link-arg=--gc-sections -C link-arg=--build-id=sha1 -C link-arg=--emit-relocs -C debuginfo=2"
@@ -23,4 +19,4 @@ find . -type f ! -name '*.rcgu.o' -delete
 cd -
 
 # Build through waf
-#pebble build
+pebble build

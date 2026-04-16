@@ -10,7 +10,8 @@
     "basalt",
     "diorite",
     "chalk",
-    "emery"
+    "emery",
+    "gabbro"
   ],
   "watchapp": {
     "watchface": false

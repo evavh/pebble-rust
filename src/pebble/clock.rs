@@ -19,11 +19,11 @@
 use crate::pebble::internal::functions::declarations::*;
 
 pub fn get_time_string() -> alloc::string::String {
-    const max_size: usize = 8usize; // 00:00 AM
-    let mut buf = [0u8; max_size];
+    const MAX_SIZE: usize = 8usize; // 00:00 AM
+    let mut buf = [0u8; MAX_SIZE];
 
     unsafe {
-        clock_copy_time_string(buf.as_mut_ptr(), max_size as u8);
+        clock_copy_time_string(buf.as_mut_ptr(), MAX_SIZE as u8);
         alloc::string::String::from_utf8_unchecked(buf.to_vec())
     }
 }

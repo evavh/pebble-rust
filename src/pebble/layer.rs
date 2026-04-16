@@ -38,7 +38,7 @@ pub struct BitmapLayer {
 pub trait ILayer {
     fn get_bounds(&self) -> GRect;
     fn get_frame(&self) -> GRect;
-    fn add_child(&self, layer: &ILayer);
+    fn add_child(&self, layer: &dyn ILayer);
     fn mark_dirty(&self);
     fn get_internal(&self) -> *mut types::Layer;
 }
@@ -52,7 +52,7 @@ impl ILayer for Layer {
         interface::layer_get_frame(self.internal)
     }
 
-    fn add_child(&self, layer: &ILayer) {
+    fn add_child(&self, layer: &dyn ILayer) {
         interface::layer_add_child(self.internal, layer.get_internal())
     }
 
@@ -88,7 +88,7 @@ impl ILayer for TextLayer {
         interface::layer_get_frame(self.inner)
     }
 
-    fn add_child(&self, layer: &ILayer) {
+    fn add_child(&self, layer: &dyn ILayer) {
         interface::layer_add_child(self.inner, layer.get_internal());
     }
 
@@ -132,7 +132,7 @@ impl ILayer for BitmapLayer {
         interface::layer_get_frame(self.inner)
     }
 
-    fn add_child(&self, layer: &ILayer) {
+    fn add_child(&self, layer: &dyn ILayer) {
         interface::layer_add_child(self.inner, layer.get_internal())
     }
 

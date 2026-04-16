@@ -2,7 +2,7 @@ use core::alloc::{GlobalAlloc, Layout};
 
 pub struct Allocator;
 
-extern {
+extern "C" {
     pub fn malloc(size: usize) -> *mut u8;
     pub fn calloc(count: usize, size: usize) -> *mut u8;
     pub fn realloc(ptr: *mut u8, size: usize) -> *mut u8;

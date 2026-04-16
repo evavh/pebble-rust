@@ -20,7 +20,7 @@ pub mod battery;
 pub mod connection;
 
 pub trait Event<T> {
-    fn subscribe(handler: extern fn(state: T));
+    fn subscribe(handler: extern "C" fn(state: T));
     fn unsubscribe();
     fn peek() -> Result<T, i32>;
 }

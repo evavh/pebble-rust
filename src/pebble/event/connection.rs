@@ -45,7 +45,7 @@ impl ConnectionEvent {
 impl Event<bool> for ConnectionEvent {
 
     /// Do **NOT** use this. Use ConnectionEvent#subscribe instead.
-    fn subscribe(handler: extern fn(bool)) {
+    fn subscribe(_handler: extern "C" fn(bool)) {
         unimplemented!()
     }
 

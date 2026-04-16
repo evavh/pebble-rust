@@ -71,10 +71,10 @@ pub struct GRect {
 
 #[repr(C)]
 pub struct WindowHandlers {
-    pub load: extern fn(*mut Window),
-    pub appear: extern fn(*mut Window),
-    pub disappear: extern fn(*mut Window),
-    pub unload: extern fn(*mut Window),
+    pub load: extern "C" fn(*mut Window),
+    pub appear: extern "C" fn(*mut Window),
+    pub disappear: extern "C" fn(*mut Window),
+    pub unload: extern "C" fn(*mut Window),
 }
 
 #[repr(C)]
@@ -235,6 +235,6 @@ pub struct BatteryChargeState {
 
 #[repr(C)]
 pub struct ConnectionHandlers {
-    pub app: extern fn(bool),
-    pub pebblekit: extern fn(bool)
+    pub app: extern "C" fn(bool),
+    pub pebblekit: extern "C" fn(bool)
 }

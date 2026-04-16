@@ -5,10 +5,10 @@
 #[macro_use]
 extern crate pebble_rust as pebble;
 
-use pebble::{app, window, layer, WindowPtr};
+use pebble::{app, window, WindowPtr};
 use pebble::window::WindowHandlers;
 use pebble::layer::{ILayer, TextLayer};
-use pebble::types::{GRect, GPoint, GSize, GColor};
+use pebble::types::{GRect, GPoint, GSize};
 
 #[no_mangle]
 pub fn main() -> isize {
@@ -32,7 +32,7 @@ pub fn main() -> isize {
     0
 }
 
-extern fn load_handler(window: WindowPtr) {
+extern "C" fn load_handler(window: WindowPtr) {
     let window = window::Window::from_raw(window);
     let root = window.get_root_layer();
     let bounds = root.get_bounds();
@@ -65,6 +65,6 @@ extern fn load_handler(window: WindowPtr) {
     root.add_child(&text);
 }
 
-extern fn unload_handler(window: WindowPtr) {}
-extern fn appear_handler(window: WindowPtr) {}
-extern fn disappear_handler(window: WindowPtr) {}
+extern "C" fn unload_handler(_window: WindowPtr) {}
+extern "C" fn appear_handler(_window: WindowPtr) {}
+extern "C" fn disappear_handler(_window: WindowPtr) {}

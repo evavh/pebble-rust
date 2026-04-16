@@ -24,7 +24,7 @@ use crate::pebble::internal::functions::declarations::{battery_state_service_sub
 pub struct BatteryStateEvent;
 
 impl Event<BatteryChargeState> for BatteryStateEvent {
-    fn subscribe(handler: extern fn(state: BatteryChargeState)) {
+    fn subscribe(handler: extern "C" fn(state: BatteryChargeState)) {
         unsafe {
             battery_state_service_subscribe(handler);
         }

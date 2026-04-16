@@ -156,13 +156,13 @@ impl AppMessage {
         }
     }
 
-    pub fn register_inbox(callback: extern fn(dict: DictPtr, ctx: VoidPtr)) {
+    pub fn register_inbox(callback: extern "C" fn(dict: DictPtr, ctx: VoidPtr)) {
         unsafe {
             app_message_register_inbox_received(callback);
         }
     }
 
-    pub fn register_inbox_drop(callback: extern fn(reason: AppMessageResult, ctx: VoidPtr)) {
+    pub fn register_inbox_drop(callback: extern "C" fn(reason: AppMessageResult, ctx: VoidPtr)) {
         unsafe {
             app_message_register_inbox_dropped(callback);
         }

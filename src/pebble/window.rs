@@ -27,10 +27,10 @@ pub struct Window {
 
 #[derive(Copy, Clone)]
 pub struct WindowHandlers {
-    pub load: extern fn(WindowPtr),
-    pub unload: extern fn(WindowPtr),
-    pub appear: extern fn(WindowPtr),
-    pub disappear: extern fn(WindowPtr)
+    pub load: extern "C" fn(WindowPtr),
+    pub unload: extern "C" fn(WindowPtr),
+    pub appear: extern "C" fn(WindowPtr),
+    pub disappear: extern "C" fn(WindowPtr)
 }
 
 impl Window {

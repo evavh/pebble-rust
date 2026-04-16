@@ -25,22 +25,22 @@
 */
 use crate::pebble::internal::types::*;
 
-extern {
+extern "C" {
     // App
     pub fn app_event_loop();
 
     // Window
     pub fn window_create() -> *mut Window;
     pub fn window_destroy(window: *mut Window);
-    pub fn window_set_click_config_provider(window: *mut Window, func: extern fn(*mut c_void));
-    pub fn window_set_click_config_provider_with_context(window: *mut Window, func: extern fn(*mut u8), ctx: *mut u8);
+    pub fn window_set_click_config_provider(window: *mut Window, func: extern "C" fn(*mut c_void));
+    pub fn window_set_click_config_provider_with_context(window: *mut Window, func: extern "C" fn(*mut u8), ctx: *mut u8);
     pub fn window_set_window_handlers(window: *mut Window, handlers: WindowHandlers);
     pub fn window_set_background_color(window: *mut Window, color: GColor);
     pub fn window_set_user_data(window: *mut Window, data: *mut c_void);
     pub fn window_get_user_data(window: *mut Window) -> *mut c_void;
     pub fn window_stack_push(window: *mut Window, animate: u8);
     pub fn window_get_root_layer(window: *mut Window) -> *mut Layer;
-    pub fn window_single_click_subscribe(button: u8, func: extern fn(*mut ClickRecognizer, *mut u8));
+    pub fn window_single_click_subscribe(button: u8, func: extern "C" fn(*mut ClickRecognizer, *mut u8));
 
     // Layer
     pub fn layer_create(bounds: GRect) -> *mut Layer;
@@ -49,7 +49,7 @@ extern {
     pub fn layer_get_bounds(layer: *mut Layer) -> GRect;
     pub fn layer_add_child(layer: *mut Layer, child: *mut Layer);
     pub fn layer_mark_dirty(layer: *mut Layer);
-    pub fn layer_set_update_proc(layer: *mut Layer, func: extern fn(*mut Layer, *mut GContext));
+    pub fn layer_set_update_proc(layer: *mut Layer, func: extern "C" fn(*mut Layer, *mut GContext));
 
     // TextLayer
     pub fn text_layer_create(bounds: GRect) -> *mut TextLayer;
@@ -76,7 +76,7 @@ extern {
     pub fn clock_is_24h_style() -> u8;
     pub fn clock_get_timezone(buffer: *mut c_char, size: usize);
 
-    pub fn tick_timer_service_subscribe(unit: TimeUnits, func: extern fn(*mut tm, TimeUnits));
+    pub fn tick_timer_service_subscribe(unit: TimeUnits, func: extern "C" fn(*mut tm, TimeUnits));
 
     // Standard C - Time
     pub fn time(t: *mut usize) -> usize;
@@ -125,17 +125,17 @@ extern {
 
     // AppMessage
     pub fn app_message_open(size_in: u32, size_out: u32);
-    pub fn app_message_register_inbox_received(callback: extern fn(iter: *mut DictionaryIterator,
+    pub fn app_message_register_inbox_received(callback: extern "C" fn(iter: *mut DictionaryIterator,
         ctx: *const c_void));
-    pub fn app_message_register_outbox_sent(callback: extern fn(iter: *mut DictionaryIterator,
+    pub fn app_message_register_outbox_sent(callback: extern "C" fn(iter: *mut DictionaryIterator,
                                                                    ctx: *const c_void));
-    pub fn app_message_register_inbox_dropped(callback: extern fn(reason: AppMessageResult, ctx: *const c_void));
+    pub fn app_message_register_inbox_dropped(callback: extern "C" fn(reason: AppMessageResult, ctx: *const c_void));
     pub fn app_message_outbox_begin(iter: *mut *mut DictionaryIterator);
     pub fn app_message_outbox_send();
 
     // EVENTS
     // Battery
-    pub fn battery_state_service_subscribe(handler: extern fn(state: BatteryChargeState));
+    pub fn battery_state_service_subscribe(handler: extern "C" fn(state: BatteryChargeState));
     pub fn battery_state_service_unsubscribe();
     pub fn battery_state_service_peek() -> BatteryChargeState;
 

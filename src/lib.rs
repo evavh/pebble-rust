@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#![feature(core_intrinsics, intrinsics, alloc, alloc_error_handler)]
+#![feature(alloc_error_handler)]
 #![no_std]
 #![no_builtins]
 
@@ -32,6 +32,6 @@ pub use pebble::*;
 static ALLOC: pebble::alloc::Allocator = pebble::alloc::Allocator;
 
 #[alloc_error_handler]
-pub fn error_handler(layout: core::alloc::Layout) -> ! {
+pub fn error_handler(_layout: core::alloc::Layout) -> ! {
     loop {}
 }
